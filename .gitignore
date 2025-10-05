@@ -193,4 +193,4 @@ cython_debug/
 .cursorignore
 .cursorindexingignoredata/lightcast_job_postings.csv
 data/lightcast_job_postings.csv
-assignment04-gboss_files/libs
+assignment04-gboss_files/libsdata/lightcast_job_postings.csv
