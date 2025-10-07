@@ -1,0 +1,98 @@
+---
+title: Assignment 03 - AI Prompts
+author:
+  - name: Gavin Boss
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+number-sections: true
+date: '2025-09-20'
+format:
+  docx: default
+  html:
+    theme: cerulean
+date-modified: today
+date-format: long
+
+---
+# Appendix 1
+::: {.callout-tip}
+Prompt
+
+--------------------------------------------------------------------------- ValueError Traceback (most recent call last) Cell In[34], line 25 22 plt.ylabel("Feature Name") 23 plt.tight_layout() ---> 25 featureimportanceplot_df= pd.DataFrame({ 26 "Feature": feature_names, 27 "Importance": importances 28 }).sort_values(by="Importance", ascending=False) 30 # Save and show 31 plt.savefig("_output/rf_feature_importance.png", dpi=300) File ~/assignment-04-gavinboss/.venv/lib/python3.12/site-packages/pandas/core/frame.py:782, in DataFrame.__init__(self, data, index, columns, dtype, copy) 776 mgr = self._init_mgr( 777 data, axes={"index": index, "columns": columns}, dtype=dtype, copy=copy 778 ) 780 elif isinstance(data, dict): 781 # GH#38939 de facto copy defaults to False only in non-dict cases --> 782 mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager) 783 elif isinstance(data, ma.MaskedArray): 784 from numpy.ma import mrecords File ~/assignment-04-gavinboss/.venv/lib/python3.12/site-packages/pandas/core/internals/construction.py:503, in dict_to_mgr(data, index, columns, dtype, typ, copy) 499 else: 500 # dtype check to exclude e.g. range objects, scalars ... 680 raise ValueError( 681 "Mixing dicts with non-Series may lead to ambiguous ordering." 682 ) ValueError: All arrays must be of the same length
+:::
+
+:::{.callout-tip}
+Ah, I see exactly what’s happening here. The error:
+
+```
+ValueError: All arrays must be of the same length
+```
+
+occurs because when you create a `DataFrame` with a dictionary like this:
+
+```python
+featureimportanceplot_df = pd.DataFrame({
+    "Feature": feature_names,
+    "Importance": importances
+}).sort_values(by="Importance", ascending=False)
+```
+
+**`feature_names` and `importances` do not have the same length**. Pandas requires that each column array be exactly the same length.
+
+---
+
+### How to fix it
+
+1. **Check the lengths**:
+
+```python
+print(len(feature_names))
+print(len(importances))
+```
+
+If they don’t match, that’s the root cause.
+
+2. **Make them match**:
+
+* If you are using a `RandomForestRegressor` or `RandomForestClassifier`, you typically get the importances via:
+
+```python
+importances = model.feature_importances_
+```
+
+* The number of features (`feature_names`) must exactly match the length of `importances`. For example, if you used a `ColumnTransformer` or `OneHotEncoder`, the transformed feature array may have more columns than your original `feature_names`.
+
+* To fix, either:
+
+  * Update `feature_names` to reflect all columns after preprocessing (including one-hot encoding).
+  * Or use only the features that match the importances array.
+
+---
+
+A quick sanity check:
+
+```python
+print("Feature Names:", len(feature_names))
+print("Importances:", len(importances))
+```
+
+If `feature_names` is shorter, it’s probably because you didn’t expand categorical variables after one-hot encoding.
+
+You can generate the correct names like this if you used `OneHotEncoder`:
+
+```python
+from sklearn.compose import ColumnTransformer
+
+# Assuming ct is your ColumnTransformer
+feature_names = ct.get_feature_names_out()
+```
+
+---
+
+If you want, I can rewrite your `featureimportanceplot_df` snippet so it **works even after one-hot encoding**, and also generates a clean plot.
+
+Do you want me to do that?
+:::
