@@ -1,0 +1,16 @@
+Link: https://github.com/met-ad-688/assignment-04-gavinboss
+
+Questions
+
+# Generalized Linear Regression Summary
+Based on the features, two significant predictors of salary include remote type name, and employment type name (part time). This makes sense when looking at the data, as remote work tends to pay higher than in person work, so jobs that are broken up by remote, hybrid, or onsite will have different pay scales, while employment type names will be broken up differently because of the difference in salary between part time and full time work. The coefficients have two features that have significant predictors, feature 6 is a positive predictor while feature 10 is a negative predictor. Other features do not have meaningful impacts on the target. The model performance is moderate and could be improved.
+- Performance
+    - Based on the Explained Variance this model is calculated to have a ~36% of the varience in salary which indicates that there is a moderate performance, but there is still room for improvement.
+- Other Features
+    - Years of experience, Internships, Full time employment are not significant predictors of salary in this model. This does not mean that they do not have significant impacts on salary as a whole, it just means that in terms of this model that there is not a trend that indicates that these features have a significant impact on salary.
+
+# Poly Regression Summary
+
+This data has similar impacts to the Linear regression model, Remote_TYPE_NAME having a positive impact and Employment_TYPE_NAME (part time) have a negative impact which are significant predictors of salary according to this model. While other features are not significant predictors. The model performance is the same based on the explained varience which is at 36%.
+
+Visulizations

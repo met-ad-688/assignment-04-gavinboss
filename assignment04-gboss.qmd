@@ -25,7 +25,7 @@ execute:
   freeze: auto
 jupyter: python3
 ---
-
+# https://github.com/met-ad-688/assignment-04-gavinboss
 # Load the Dataset
 
 ```{python}
@@ -51,7 +51,6 @@ df = spark.read.option("header", "true").option("inferSchema", "true").option("m
 # df.printSchema() # comment this line when rendering the submission
 # df.show(5)
 ```
-
 
 # Feature Engineering
 
@@ -119,7 +118,6 @@ train_data, test_data = data.randomSplit([0.8, 0.2], seed=42)
 # Check number of records in each
 print("Training Data Count:", train_data.count())
 print("Testing Data Count:", test_data.count())
-
 ```
 
 # Train/Test Split
@@ -179,7 +177,6 @@ regression_df.show(5, truncate=False)
 # Linear Regression Model (OLS)
 
 ```{python}
-
 from pyspark.sql.functions import regexp_replace, trim
 
 regression_df = regression_df.withColumn("EDUCATION_LEVELS_NAME", trim(regexp_replace(col("EDUCATION_LEVELS_NAME"), r"[\.\-]", " ")))
@@ -201,7 +198,6 @@ pipeline_reg = Pipeline(stages=indexers + encoders + [assembler])
 regression_data = pipeline_reg.fit(regression_df).transform(regression_df)
 
 regression_data.select("SALARY","features").show(5, truncate=False)
-
 ```
 
 ```{python}
@@ -504,7 +500,6 @@ featureimportanceplot_df = featureimportanceplot_df.head(10)
 plt.savefig("_output/rf_feature_importance.png", dpi=300)
 plt.show()
 featureimportanceplot_df
-
 ```
 
 # Compare 3 Models - GLR,  Polynomial, RF

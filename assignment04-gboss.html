@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="assignment04-gboss_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="assignment04-gboss_files/libs/clipboard/clipboard.min.js"></script>
 <script src="assignment04-gboss_files/libs/quarto-html/quarto.js"></script>
 <script src="assignment04-gboss_files/libs/quarto-html/popper.min.js"></script>
 <script src="assignment04-gboss_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -35,6 +35,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="assignment04-gboss_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="assignment04-gboss_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="assignment04-gboss_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -43,7 +46,24 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#load-the-dataset" id="toc-load-the-dataset" class="nav-link active" data-scroll-target="#load-the-dataset"><span class="header-section-number">1</span> Load the Dataset</a></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering"><span class="header-section-number">2</span> Feature Engineering</a></li>
+  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">3</span> Train/Test Split</a></li>
+  <li><a href="#regression_df" id="toc-regression_df" class="nav-link" data-scroll-target="#regression_df"><span class="header-section-number">4</span> Regression_DF</a></li>
+  <li><a href="#linear-regression-model-ols" id="toc-linear-regression-model-ols" class="nav-link" data-scroll-target="#linear-regression-model-ols"><span class="header-section-number">5</span> Linear Regression Model (OLS)</a></li>
+  <li><a href="#generalized-linear-regression-summary" id="toc-generalized-linear-regression-summary" class="nav-link" data-scroll-target="#generalized-linear-regression-summary"><span class="header-section-number">6</span> Generalized Linear Regression Summary</a></li>
+  <li><a href="#polynomical-regression" id="toc-polynomical-regression" class="nav-link" data-scroll-target="#polynomical-regression"><span class="header-section-number">7</span> Polynomical Regression</a></li>
+  <li><a href="#poly-regression-summary" id="toc-poly-regression-summary" class="nav-link" data-scroll-target="#poly-regression-summary"><span class="header-section-number">8</span> Poly Regression Summary</a></li>
+  <li><a href="#random-forest-regression" id="toc-random-forest-regression" class="nav-link" data-scroll-target="#random-forest-regression"><span class="header-section-number">9</span> Random Forest Regression</a></li>
+  <li><a href="#feature-importance-plot" id="toc-feature-importance-plot" class="nav-link" data-scroll-target="#feature-importance-plot"><span class="header-section-number">10</span> Feature Importance Plot</a></li>
+  <li><a href="#compare-3-models---glr-polynomial-rf" id="toc-compare-3-models---glr-polynomial-rf" class="nav-link" data-scroll-target="#compare-3-models---glr-polynomial-rf"><span class="header-section-number">11</span> Compare 3 Models - GLR, Polynomial, RF</a></li>
+  <li><a href="#calcutlating-log-likelihood-and-bic-for-pyspark-models" id="toc-calcutlating-log-likelihood-and-bic-for-pyspark-models" class="nav-link" data-scroll-target="#calcutlating-log-likelihood-and-bic-for-pyspark-models"><span class="header-section-number">12</span> Calcutlating Log-Likelihood and BIC for Pyspark Models</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="assignment04-gboss.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -80,7 +100,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">October 4, 2025</p>
+      <p class="date-modified">October 8, 2025</p>
     </div>
   </div>
     
@@ -91,7 +111,599 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="load-the-dataset" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Load the Dataset</h1>
+<div id="6186ee9c" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 100:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+</div>
+</section>
+<section id="feature-engineering" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Feature Engineering</h1>
+<div id="06a184e5" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 101:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 104:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 108:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 111:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+------+--------------------------------------+--------------------------------------+
+|SALARY|features                              |features_poly                         |
++------+--------------------------------------+--------------------------------------+
+|192800|(9,[0,1,4,7],[6.0,55.0,1.0,1.0])      |(9,[0,1,4,7],[6.0,55.0,1.0,1.0])      |
+|125900|(9,[0,1,4,7],[12.0,18.0,1.0,1.0])     |(9,[0,1,4,7],[12.0,18.0,1.0,1.0])     |
+|118560|[5.0,20.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0]|[5.0,20.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0]|
+|192800|(9,[0,1,4,7],[6.0,55.0,1.0,1.0])      |(9,[0,1,4,7],[6.0,55.0,1.0,1.0])      |
+|116500|(9,[0,1,4,7],[12.0,16.0,1.0,1.0])     |(9,[0,1,4,7],[12.0,16.0,1.0,1.0])     |
++------+--------------------------------------+--------------------------------------+
+only showing top 5 rows
 
+Training Data Count: 11604
+Testing Data Count: 2812</code></pre>
+</div>
+</div>
+</section>
+<section id="traintest-split" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Train/Test Split</h1>
+<div id="04efb14a" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 114:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 117:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training Data Count: 11604
+Testing Data Count: 2812</code></pre>
+</div>
+</div>
+<ul>
+<li>I chose the 80/20 split that was discussed during class, the data set is large enough that this split should be fine, and should account for enough of the data.</li>
+</ul>
+</section>
+<section id="regression_df" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Regression_DF</h1>
+<div id="816c14a3" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-stdout">
+<pre><code>+------+--------------------+--------------------+--------+-------------+-------------------+----------------+----------------------+------------------------------------------------------------------------------------+
+|SALARY|MIN_YEARS_EXPERIENCE|MAX_YEARS_EXPERIENCE|DURATION|IS_INTERNSHIP|COMPANY_IS_STAFFING|REMOTE_TYPE_NAME|EMPLOYMENT_TYPE_NAME  |EDUCATION_LEVELS_NAME                                                               |
++------+--------------------+--------------------+--------+-------------+-------------------+----------------+----------------------+------------------------------------------------------------------------------------+
+|131100|2                   |2                   |11      |false        |false              |[None]          |Full-time (&gt; 32 hours)|[\n  "Bachelor's degree"\n]                                                         |
+|136950|3                   |3                   |28      |false        |false              |Remote          |Full-time (&gt; 32 hours)|[\n  "Bachelor's degree",\n  "Master's degree",\n  "Ph D  or professional degree"\n]|
+|136950|3                   |3                   |28      |false        |false              |Remote          |Full-time (&gt; 32 hours)|[\n  "Bachelor's degree",\n  "Master's degree",\n  "Ph D  or professional degree"\n]|
+|104000|3                   |3                   |8       |false        |false              |[None]          |Full-time (&gt; 32 hours)|[\n  "Bachelor's degree"\n]                                                         |
+|80000 |3                   |3                   |37      |false        |false              |[None]          |Full-time (&gt; 32 hours)|[\n  "Bachelor's degree"\n]                                                         |
++------+--------------------+--------------------+--------+-------------+-------------------+----------------+----------------------+------------------------------------------------------------------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+</section>
+<section id="linear-regression-model-ols" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Linear Regression Model (OLS)</h1>
+<div id="8cbd91b2" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 121:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 124:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+------+---------------------------------------+
+|SALARY|features                               |
++------+---------------------------------------+
+|131100|(10,[0,1,2,5,8],[2.0,2.0,11.0,1.0,1.0])|
+|136950|(10,[0,1,2,6,8],[3.0,3.0,28.0,1.0,1.0])|
+|136950|(10,[0,1,2,6,8],[3.0,3.0,28.0,1.0,1.0])|
+|104000|(10,[0,1,2,5,8],[3.0,3.0,8.0,1.0,1.0]) |
+|80000 |(10,[0,1,2,5,8],[3.0,3.0,37.0,1.0,1.0])|
++------+---------------------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div id="26d38cb4" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 128:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 131:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 134:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(2243, 14)
+(1848, 14)
+(395, 14)</code></pre>
+</div>
+</div>
+<div id="f59e8717" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 137:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+</div>
+<div id="46d105f1" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept: 75819.4000
+Coefficients: 
+  Feature 1: 4215.6844
+  Feature 2: 4215.6844
+  Feature 3: -23.7725
+  Feature 4: -23942.2288
+  Feature 5: -98.6466
+  Feature 6: 6430.6643
+  Feature 7: 16463.9439
+  Feature 8: 655.1948
+  Feature 9: -9251.7034
+  Feature 10: -12761.7200</code></pre>
+</div>
+</div>
+<div id="b04c00be" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+---Regression Summary---
+Coefficient Standard Errors: ['57432.0320', '57432.0320', '40.9532', '12518.4270', '1651.7511', '5327.5134', '5421.5678', '6892.7578', '7503.5432', '8182.7045', '9011.3793']
+T-values: ['0.0734', '0.0734', '-0.5805', '-1.9126', '-0.0597', '1.2071', '3.0367', '0.0951', '-1.2330', '-1.5596', '8.4137']
+P-values: ['0.9415', '0.9415', '0.5617', '0.0559', '0.9524', '0.2275', '0.0024', '0.9243', '0.2177', '0.1190', '0.0000']</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 138:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+</div>
+<div id="290d5867" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 141:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 142:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>nullDeviance: 2728391925894.5732
+Residual DF Null: 2232
+Residual DF: 2232
+AIC: 52299.8485
+Deviance: 1738269402130.5212
+Explained Variance (from deviance): 0.3628960027212421</code></pre>
+</div>
+</div>
+<div id="c53e28d3" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-stdout">
+<pre><code>Length of features: 11
+Length of coefficients: 11
+Length of standard errors: 11
+Length of t-values: 11
+Length of p-values: 11</code></pre>
+</div>
+</div>
+<div id="c49ca387" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="35">
+<div>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Features</th>
+<th data-quarto-table-cell-role="th">Estimate</th>
+<th data-quarto-table-cell-role="th">Std. Error</th>
+<th data-quarto-table-cell-role="th">t value</th>
+<th data-quarto-table-cell-role="th">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Intercept</td>
+<td>75819.4000</td>
+<td>57432.0320</td>
+<td>0.0734</td>
+<td>0.9415</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>MIN_YEARS_EXPERIENCE</td>
+<td>4215.6844</td>
+<td>57432.0320</td>
+<td>0.0734</td>
+<td>0.9415</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>MAX_YEARS_EXPERIENCE</td>
+<td>4215.6844</td>
+<td>40.9532</td>
+<td>-0.5805</td>
+<td>0.5617</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>DURATION</td>
+<td>-23.7725</td>
+<td>12518.4270</td>
+<td>-1.9126</td>
+<td>0.0559</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>IS_INTERNSHIP</td>
+<td>-23942.2288</td>
+<td>1651.7511</td>
+<td>-0.0597</td>
+<td>0.9524</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>COMPANY_IS_STAFFING</td>
+<td>-98.6466</td>
+<td>5327.5134</td>
+<td>1.2071</td>
+<td>0.2275</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>REMOTE_TYPE_NAME_vec_[None]</td>
+<td>6430.6643</td>
+<td>5421.5678</td>
+<td>3.0367</td>
+<td>0.0024</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>REMOTE_TYPE_NAME_vec_Remote</td>
+<td>16463.9439</td>
+<td>6892.7578</td>
+<td>0.0951</td>
+<td>0.9243</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>REMOTE_TYPE_NAME_vec_Hybrid Remote</td>
+<td>655.1948</td>
+<td>7503.5432</td>
+<td>-1.2330</td>
+<td>0.2177</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>EMPLOYMENT_TYPE_NAME_vec_Full-time (&gt; 32 hours)</td>
+<td>-9251.7034</td>
+<td>8182.7045</td>
+<td>-1.5596</td>
+<td>0.1190</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>EMPLOYMENT_TYPE_NAME_vec_Part-time (â‰¤ 32 hours)</td>
+<td>-12761.7200</td>
+<td>9011.3793</td>
+<td>8.4137</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="generalized-linear-regression-summary" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Generalized Linear Regression Summary</h1>
+<p>Based on the features, two significant predictors of salary include remote type name, and employment type name (part time). This makes sense when looking at the data, as remote work tends to pay higher than in person work, so jobs that are broken up by remote, hybrid, or onsite will have different pay scales, while employment type names will be broken up differently because of the difference in salary between part time and full time work. The coefficients have two features that have significant predictors, feature 6 is a positive predictor while feature 10 is a negative predictor. Other features do not have meaningful impacts on the target. The model performance is moderate and could be improved. - Performance - Based on the Explained Variance this model is calculated to have a ~36% of the varience in salary which indicates that there is a moderate performance, but there is still room for improvement. - Other Features - Years of experience, Internships, Full time employment are not significant predictors of salary in this model. This does not mean that they do not have significant impacts on salary as a whole, it just means that in terms of this model that there is not a trend that indicates that these features have a significant impact on salary.</p>
+</section>
+<section id="polynomical-regression" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Polynomical Regression</h1>
+<div id="09cc6b77" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-stdout">
+<pre><code>+------+---------------------------------------------+
+|SALARY|features_poly                                |
++------+---------------------------------------------+
+|131100|(11,[0,1,2,3,6,9],[2.0,4.0,2.0,11.0,1.0,1.0])|
+|136950|(11,[0,1,2,3,7,9],[3.0,9.0,3.0,28.0,1.0,1.0])|
+|136950|(11,[0,1,2,3,7,9],[3.0,9.0,3.0,28.0,1.0,1.0])|
+|104000|(11,[0,1,2,3,6,9],[3.0,9.0,3.0,8.0,1.0,1.0]) |
+|80000 |(11,[0,1,2,3,6,9],[3.0,9.0,3.0,37.0,1.0,1.0])|
++------+---------------------------------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div id="eb9f21d2" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 144:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 147:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 150:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(2243, 16)
+(1848, 16)
+(395, 16)</code></pre>
+</div>
+</div>
+<div id="90f4ede1" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 153:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+</div>
+<div id="4eb2b474" class="cell" data-execution_count="16">
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept: 75819.4000
+Coefficients: 
+  Feature 1: 4215.6844
+  Feature 2: 4215.6844
+  Feature 3: -23.7725
+  Feature 4: -23942.2288
+  Feature 5: -98.6466
+  Feature 6: 6430.6643
+  Feature 7: 16463.9439
+  Feature 8: 655.1948
+  Feature 9: -9251.7034
+  Feature 10: -12761.7200
+
+---Regression Summary---
+Coefficient Standard Errors: ['57432.0320', '57432.0320', '40.9532', '12518.4270', '1651.7511', '5327.5134', '5421.5678', '6892.7578', '7503.5432', '8182.7045', '9011.3793']
+T-values: ['0.0734', '0.0734', '-0.5805', '-1.9126', '-0.0597', '1.2071', '3.0367', '0.0951', '-1.2330', '-1.5596', '8.4137']
+P-values: ['0.9415', '0.9415', '0.5617', '0.0559', '0.9524', '0.2275', '0.0024', '0.9243', '0.2177', '0.1190', '0.0000']</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 154:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+</div>
+<div id="20365b8c" class="cell" data-execution_count="17">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 157:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 158:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>nullDeviance: 2728391925894.5732
+Residual DF Null: 2232
+Residual DF: 2232
+AIC: 52299.8485
+Deviance: 1738269402130.5212
+Explained Variance (from deviance): 0.3628960027212421</code></pre>
+</div>
+</div>
+<div id="86fb65e1" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-stdout">
+<pre><code>Length of features: 11
+Length of coefficients: 11
+Length of standard errors: 11
+Length of t-values: 11
+Length of p-values: 11</code></pre>
+</div>
+</div>
+<div id="4f8e2ea5" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="42">
+<div>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Features</th>
+<th data-quarto-table-cell-role="th">Estimate</th>
+<th data-quarto-table-cell-role="th">Std. Error</th>
+<th data-quarto-table-cell-role="th">t value</th>
+<th data-quarto-table-cell-role="th">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Intercept</td>
+<td>75819.4000</td>
+<td>57432.0320</td>
+<td>0.0734</td>
+<td>0.9415</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>MIN_YEARS_EXPERIENCE</td>
+<td>4215.6844</td>
+<td>57432.0320</td>
+<td>0.0734</td>
+<td>0.9415</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>MAX_YEARS_EXPERIENCE</td>
+<td>4215.6844</td>
+<td>40.9532</td>
+<td>-0.5805</td>
+<td>0.5617</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>DURATION</td>
+<td>-23.7725</td>
+<td>12518.4270</td>
+<td>-1.9126</td>
+<td>0.0559</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>IS_INTERNSHIP</td>
+<td>-23942.2288</td>
+<td>1651.7511</td>
+<td>-0.0597</td>
+<td>0.9524</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>COMPANY_IS_STAFFING</td>
+<td>-98.6466</td>
+<td>5327.5134</td>
+<td>1.2071</td>
+<td>0.2275</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>REMOTE_TYPE_NAME_vec_[None]</td>
+<td>6430.6643</td>
+<td>5421.5678</td>
+<td>3.0367</td>
+<td>0.0024</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>REMOTE_TYPE_NAME_vec_Remote</td>
+<td>16463.9439</td>
+<td>6892.7578</td>
+<td>0.0951</td>
+<td>0.9243</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>REMOTE_TYPE_NAME_vec_Hybrid Remote</td>
+<td>655.1948</td>
+<td>7503.5432</td>
+<td>-1.2330</td>
+<td>0.2177</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>EMPLOYMENT_TYPE_NAME_vec_Full-time (&gt; 32 hours)</td>
+<td>-9251.7034</td>
+<td>8182.7045</td>
+<td>-1.5596</td>
+<td>0.1190</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>EMPLOYMENT_TYPE_NAME_vec_Part-time (â‰¤ 32 hours)</td>
+<td>-12761.7200</td>
+<td>9011.3793</td>
+<td>8.4137</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="poly-regression-summary" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Poly Regression Summary</h1>
+<p>This data has similar impacts to the Linear regression model, Remote_TYPE_NAME having a positive impact and Employment_TYPE_NAME (part time) have a negative impact which are significant predictors of salary according to this model. While other features are not significant predictors. The model performance is the same based on the explained varience which is at 36%.</p>
+</section>
+<section id="random-forest-regression" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Random Forest Regression</h1>
+<div id="459551cb" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 159:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 160:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 161:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 163:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 169:&gt;                                                        (0 + 1) / 1]                                                                                25/10/08 00:59:42 WARN DAGScheduler: Broadcasting large task binary with size 1546.5 KiB
+[Stage 171:&gt;                                                        (0 + 1) / 1]                                                                                25/10/08 00:59:43 WARN DAGScheduler: Broadcasting large task binary with size 2.7 MiB
+[Stage 173:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 175:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 176:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Random Forest RMSE: 24624.2976
+Random Forest R²: 0.4558
+Feature Importances: (10,[0,1,2,3,4,5,6,7,8,9],[0.4790147073653835,0.3444487354194342,0.09395909200951295,0.0014699100208343343,0.019885592865900418,0.015141883605094464,0.030348076324909136,0.0036327841559004475,0.006208999364022691,0.005890218869007941])</code></pre>
+</div>
+</div>
+</section>
+<section id="feature-importance-plot" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Feature Importance Plot</h1>
+<div id="7025ced7" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_3052/4249483686.py:19: FutureWarning:
+
+
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04-gboss_files/figure-html/cell-22-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Feature</th>
+<th data-quarto-table-cell-role="th">Importance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>MIN_YEARS_EXPERIENCE</td>
+<td>0.479015</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>MAX_YEARS_EXPERIENCE</td>
+<td>0.344449</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>DURATION</td>
+<td>0.093959</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6</td>
+<td>REMOTE_TYPE_NAME_vec_Remote</td>
+<td>0.030348</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>COMPANY_IS_STAFFING</td>
+<td>0.019886</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>REMOTE_TYPE_NAME_vec_[None]</td>
+<td>0.015142</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>EMPLOYMENT_TYPE_NAME_vec_Full-time (&gt; 32 hours)</td>
+<td>0.006209</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>EMPLOYMENT_TYPE_NAME_vec_Part-time (â‰¤ 32 hours)</td>
+<td>0.005890</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">7</td>
+<td>REMOTE_TYPE_NAME_vec_Hybrid Remote</td>
+<td>0.003633</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>IS_INTERNSHIP</td>
+<td>0.001470</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="compare-3-models---glr-polynomial-rf" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Compare 3 Models - GLR, Polynomial, RF</h1>
+<div id="d7e347ad" class="cell" data-execution_count="22">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 177:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 178:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 179:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 180:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 183:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 186:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 189:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 190:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 191:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model Comparison Metrics:
+            Model          RMSE           AIC           BIC
+0             GLR  27838.376618  52299.848476  45995.361481
+1  Polynomial GLR  27838.376618  52299.848476  45995.361481
+2   Random Forest  24624.297584           NaN   8047.865121</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04-gboss_files/figure-html/cell-23-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="calcutlating-log-likelihood-and-bic-for-pyspark-models" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Calcutlating Log-Likelihood and BIC for Pyspark Models</h1>
+<div id="555761fa" class="cell" data-execution_count="23">
+<div class="cell-output cell-output-stderr">
+<pre><code>[Stage 192:&gt;                                                        (0 + 1) / 1]                                                                                [Stage 195:&gt;                                                        (0 + 1) / 1]                                                                                </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GLR BIC: 52360.7468
+Polynomial GLR BIC: 52360.7468</code></pre>
+</div>
+</div>
+</section>
 
 </main>
 <!-- /main column -->
